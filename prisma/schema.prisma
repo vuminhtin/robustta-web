@@ -1,0 +1,216 @@
+// RobustTA — Database Schema
+// Supabase PostgreSQL via Prisma ORM
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ========== AUTH & USERS ==========
+
+enum UserRole {
+  ADMIN
+  EDITOR
+  SALES
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String?
+  avatar    String?
+  role      UserRole @default(SALES)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  orders       Order[]
+  activityLogs ActivityLog[]
+}
+
+// ========== PRODUCTS ==========
+
+model Product {
+  id          String   @id @default(uuid())
+  name        String
+  slug        String   @unique
+  tagline     String?
+  description String?  @db.Text
+  category    String?
+  image       String?
+  gallery     String[] // Array of image URLs
+  isActive    Boolean  @default(true)
+  isFeatured  Boolean  @default(false)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  variants   ProductVariant[]
+  orderItems OrderItem[]
+  taste      TasteProfile?
+
+  @@index([slug])
+  @@index([isActive, isFeatured])
+}
+
+model TasteProfile {
+  id        String @id @default(uuid())
+  productId String @unique
+  body      Int    @default(5) // 1-10
+  bitter    Int    @default(5)
+  sweet     Int    @default(5)
+  aroma     Int    @default(5)
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model ProductVariant {
+  id        String  @id @default(uuid())
+  productId String
+  weight    String  // "200g", "500g", "1kg", "2kg"
+  grind     String  // "Hạt nguyên", "Xay phin", "Xay máy"
+  price     Int     // Price in VND (no decimals)
+  stock     Int     @default(100)
+  isActive  Boolean @default(true)
+
+  product    Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  orderItems OrderItem[]
+
+  @@unique([productId, weight, grind])
+  @@index([productId])
+}
+
+// ========== ORDERS ==========
+
+enum OrderStatus {
+  NEW        // Mới
+  PROCESSING // Đang xử lý
+  SHIPPING   // Đang giao
+  COMPLETED  // Thành công
+  CANCELLED  // Hủy
+}
+
+enum PaymentMethod {
+  VIETQR
+  COD
+  BANK_TRANSFER
+}
+
+model Order {
+  id            String        @id @default(uuid())
+  orderNumber   String        @unique
+  status        OrderStatus   @default(NEW)
+  paymentMethod PaymentMethod @default(VIETQR)
+  isPaid        Boolean       @default(false)
+
+  // Customer info
+  customerName  String
+  customerEmail String?
+  customerPhone String
+  address       String        @db.Text
+  province      String
+  district      String?
+  ward          String?
+  note          String?       @db.Text
+
+  // Amounts
+  subtotal      Int           // VND
+  shippingFee   Int           @default(0)
+  discount      Int           @default(0)
+  total         Int
+
+  // Relations
+  userId        String?
+  user          User?         @relation(fields: [userId], references: [id])
+  items         OrderItem[]
+
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([status])
+  @@index([createdAt])
+  @@index([orderNumber])
+}
+
+model OrderItem {
+  id        String @id @default(uuid())
+  orderId   String
+  productId String
+  variantId String
+  quantity  Int
+  unitPrice Int    // VND at time of order
+  total     Int
+
+  order   Order          @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product        @relation(fields: [productId], references: [id])
+  variant ProductVariant @relation(fields: [variantId], references: [id])
+
+  @@index([orderId])
+}
+
+// ========== CMS ==========
+
+model Page {
+  id          String   @id @default(uuid())
+  title       String
+  slug        String   @unique
+  content     String?  @db.Text // TipTap JSON
+  metaTitle   String?
+  metaDesc    String?  @db.Text
+  ogImage     String?
+  isPublished Boolean  @default(false)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([slug])
+}
+
+model MenuItem {
+  id       String  @id @default(uuid())
+  label    String
+  url      String
+  location String  // "header" | "footer"
+  parentId String?
+  sortOrder Int    @default(0)
+  isActive Boolean @default(true)
+
+  parent   MenuItem?  @relation("MenuTree", fields: [parentId], references: [id])
+  children MenuItem[] @relation("MenuTree")
+
+  @@index([location, sortOrder])
+}
+
+model Media {
+  id        String   @id @default(uuid())
+  filename  String
+  url       String
+  mimeType  String
+  size      Int      // bytes
+  alt       String?
+  createdAt DateTime @default(now())
+
+  @@index([mimeType])
+}
+
+// ========== ACTIVITY LOG ==========
+
+model ActivityLog {
+  id        String   @id @default(uuid())
+  userId    String
+  action    String   // "CREATE", "UPDATE", "DELETE"
+  entity    String   // "Product", "Order", "Page"
+  entityId  String?
+  details   String?  @db.Text
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([createdAt])
+}

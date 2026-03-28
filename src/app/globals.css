@@ -1,0 +1,126 @@
+@import "tailwindcss";
+
+/* ========================================
+   RobustTA Design System — Tailwind v4
+   Brand Colors: #58413A (Brown) + #2B4D40 (Green)
+   ======================================== */
+
+@theme inline {
+  /* Brand Colors */
+  --color-brand-brown: #58413A;
+  --color-brand-brown-dark: #3D2D28;
+  --color-brand-brown-deep: #2A1F1B;
+  --color-brand-green: #2B4D40;
+  --color-brand-green-light: #3A6B56;
+  --color-brand-teal: #5B9EA6;
+  --color-brand-teal-light: #D6EADF;
+  --color-brand-orange: #E8834A;
+  --color-brand-cream: #F5EDE3;
+  --color-brand-cream-light: #FDFBF7;
+
+  /* Neutrals */
+  --color-text-primary: #2D2322;
+  --color-text-secondary: #6B5B54;
+  --color-text-light: #9A8A82;
+  --color-border: #E8DDD4;
+  --color-bg-light: #FDFBF7;
+  --color-bg-white: #FFFFFF;
+
+  /* Fonts */
+  --font-heading: 'SVN-Gilroy', system-ui, sans-serif;
+  --font-body: 'SVN-Gilroy', system-ui, sans-serif;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(45, 35, 34, 0.05);
+  --shadow-md: 0 4px 12px rgba(45, 35, 34, 0.08);
+  --shadow-lg: 0 8px 24px rgba(45, 35, 34, 0.12);
+  --shadow-xl: 0 16px 48px rgba(45, 35, 34, 0.16);
+}
+
+/* SVN-Gilroy Font Faces — file names have spaces */
+@font-face {
+  font-family: 'SVN-Gilroy';
+  src: url('/fonts/SVN-Gilroy Light.otf') format('opentype');
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SVN-Gilroy';
+  src: url('/fonts/SVN-Gilroy Regular.otf') format('opentype');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SVN-Gilroy';
+  src: url('/fonts/SVN-Gilroy Medium.otf') format('opentype');
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SVN-Gilroy';
+  src: url('/fonts/SVN-Gilroy SemiBold.otf') format('opentype');
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SVN-Gilroy';
+  src: url('/fonts/SVN-Gilroy Bold.otf') format('opentype');
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SVN-Gilroy';
+  src: url('/fonts/SVN-Gilroy Heavy.otf') format('opentype');
+  font-weight: 800;
+  font-display: swap;
+}
+
+/* Base Styles */
+body {
+  font-family: var(--font-body);
+  color: var(--color-text-primary);
+  background: var(--color-bg-light);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-brand-brown-dark);
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selection color */
+::selection {
+  background: var(--color-brand-teal-light);
+  color: var(--color-brand-brown-dark);
+}
+
+/* Focus ring */
+*:focus-visible {
+  outline: 2px solid var(--color-brand-green);
+  outline-offset: 2px;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-brand-cream);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-brand-brown);
+  border-radius: 4px;
+}
