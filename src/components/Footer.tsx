@@ -101,8 +101,8 @@ export default function Footer() {
                   rel="noreferrer"
                   className="block hover:opacity-80 transition-opacity"
                 >
-                  <img 
-                    src="http://online.gov.vn/PublicImages/2015/08/27/11/20150827110756-dathongbao.png" 
+                  <Image 
+                    src="/images/logo-bct.png" 
                     alt="Đã thông báo Bộ Công Thương"
                     width={130}
                     height={50}
