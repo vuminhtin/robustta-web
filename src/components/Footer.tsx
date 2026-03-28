@@ -1,4 +1,5 @@
 'use client';
+// v3.12.10 - Force redeploy for BCT logo fix
 
 import Image from 'next/image';
 import Link from 'next/link';
