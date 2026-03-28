@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { getDashboardKPIs, getOrders, getInventory, formatVND, freshnessLabel, type MockOrder } from '@/lib/admin/mockData';
 
@@ -14,15 +14,18 @@ const STATUS_COLS: { key: MockOrder['status']; label: string; color: string }[] 
 const PAYMENT_LABEL: Record<string, string> = { vietqr: 'QR', cod: 'COD', card: 'Thẻ' };
 
 export default function AdminDashboard() {
-  const [kpi, setKpi] = useState({ todayOrders: 0, monthRevenue: 0, lowStock: 0, outOfStock: 0, pending: 0 });
-  const [orders, setOrders] = useState<MockOrder[]>([]);
-  const [inv, setInv] = useState<ReturnType<typeof getInventory>>([]);
-
-  useEffect(() => {
-    setKpi(getDashboardKPIs());
-    setOrders(getOrders());
-    setInv(getInventory());
-  }, []);
+  const [kpi] = useState(() => {
+    if (typeof window === 'undefined') return { todayOrders: 0, monthRevenue: 0, lowStock: 0, outOfStock: 0, pending: 0 };
+    return getDashboardKPIs();
+  });
+  const [orders] = useState<MockOrder[]>(() => {
+    if (typeof window === 'undefined') return [];
+    return getOrders();
+  });
+  const [inv] = useState<ReturnType<typeof getInventory>>(() => {
+    if (typeof window === 'undefined') return [];
+    return getInventory();
+  });
 
   const topProducts = [
     { name: 'R — Rich 500g Phin', sales: 42, pct: 84 },

@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
+import { createContext, useContext, useState, type ReactNode } from 'react';
 
 /**
  * ⚙️ CẦN CẤU HÌNH — Tài khoản / Đăng nhập
@@ -74,22 +74,28 @@ interface StoredUser extends User {
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [orders, setOrders] = useState<Order[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  // Load user on mount
-  useEffect(() => {
+  const [user, setUser] = useState<User | null>(() => {
+    if (typeof window === 'undefined') return null;
     try {
       const stored = localStorage.getItem(USER_STORAGE_KEY);
-      if (stored) {
-        const parsed = JSON.parse(stored) as User;
-        setUser(parsed);
-        loadOrders(parsed.id);
-      }
-    } catch { /* skip */ }
-    setIsLoading(false);
-  }, []);
+      return stored ? JSON.parse(stored) as User : null;
+    } catch {
+      return null;
+    }
+  });
+  const [orders, setOrders] = useState<Order[]>(() => {
+    if (typeof window === 'undefined') return [];
+    try {
+      const stored = localStorage.getItem(USER_STORAGE_KEY);
+      if (!stored) return [];
+      const parsed = JSON.parse(stored) as User;
+      const all = JSON.parse(localStorage.getItem(ORDERS_STORAGE_KEY) || '[]') as Order[];
+      return all.filter(o => o.userId === parsed.id);
+    } catch {
+      return [];
+    }
+  });
+  const [isLoading] = useState(false);
 
   const loadOrders = (userId: string) => {
     try {
@@ -105,7 +111,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const users = JSON.parse(localStorage.getItem(USERS_STORAGE_KEY) || '[]') as StoredUser[];
       const found = users.find(u => u.email === email && u.password === password);
       if (!found) return false;
-      const { password: _, ...userData } = found;
+      const { password: _p, ...userData } = found; // eslint-disable-line @typescript-eslint/no-unused-vars
       setUser(userData);
       localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(userData));
       loadOrders(userData.id);
@@ -133,7 +139,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       users.push(newUser);
       localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
 
-      const { password: _, ...userData } = newUser;
+      const { password: _p2, ...userData } = newUser; // eslint-disable-line @typescript-eslint/no-unused-vars
       setUser(userData);
       localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(userData));
       setOrders([]);

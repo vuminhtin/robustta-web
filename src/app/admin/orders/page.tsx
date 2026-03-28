@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { getOrders, formatVND, type MockOrder } from '@/lib/admin/mockData';
 
@@ -18,12 +18,13 @@ const STATUS_BADGE: Record<string, string> = {
 };
 
 export default function AdminOrders() {
-  const [orders, setOrders] = useState<MockOrder[]>([]);
+  const [orders] = useState<MockOrder[]>(() => {
+    if (typeof window === 'undefined') return [];
+    return getOrders();
+  });
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [payFilter, setPayFilter] = useState<string>('all');
   const [search, setSearch] = useState('');
-
-  useEffect(() => { setOrders(getOrders()); }, []);
 
   const filtered = orders.filter(o => {
     if (statusFilter !== 'all' && o.status !== statusFilter) return false;

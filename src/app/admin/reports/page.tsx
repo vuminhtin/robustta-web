@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { getInventory, getOrders, formatVND, freshnessLabel, type MockInventory } from '@/lib/admin/mockData';
 
 const MONTHLY_REVENUE = [
@@ -22,17 +22,19 @@ const TOP_PRODUCTS = [
 ];
 
 export default function AdminReports() {
-  const [inv, setInv] = useState<MockInventory[]>([]);
-  const [totalRevenue, setTotalRevenue] = useState(0);
-  const [totalOrders, setTotalOrders] = useState(0);
-
-  useEffect(() => {
-    setInv(getInventory());
+  const [inv] = useState<MockInventory[]>(() => {
+    if (typeof window === 'undefined') return [];
+    return getInventory();
+  });
+  const [totalRevenue] = useState(() => {
+    if (typeof window === 'undefined') return 0;
     const orders = getOrders();
-    const done = orders.filter(o => o.status === 'done');
-    setTotalRevenue(done.reduce((s, o) => s + o.total, 0));
-    setTotalOrders(orders.length);
-  }, []);
+    return orders.filter(o => o.status === 'done').reduce((s, o) => s + o.total, 0);
+  });
+  const [totalOrders] = useState(() => {
+    if (typeof window === 'undefined') return 0;
+    return getOrders().length;
+  });
 
   const lowStockItems = inv.filter(i => i.stock <= i.threshold);
 

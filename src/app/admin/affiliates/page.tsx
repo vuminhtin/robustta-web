@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useAffiliate, type AffiliateOrder } from '@/context/AffiliateContext';
 import { formatPrice } from '@/data/products';
 
@@ -18,15 +18,8 @@ function formatDate(iso: string) {
 
 export default function AdminAffiliatesPage() {
   const { getAllRecords, markPaid } = useAffiliate();
-  const [grouped, setGrouped] = useState<GroupedAffiliate[]>([]);
-  const [expanded, setExpanded] = useState<string | null>(null);
-  const [, forceRender] = useState(0);
 
-  useEffect(() => {
-    refreshData();
-  }, []);
-
-  const refreshData = () => {
+  const computeGrouped = () => {
     const all = getAllRecords();
     const map: Record<string, AffiliateOrder[]> = {};
     for (const r of all) {
@@ -41,12 +34,18 @@ export default function AdminAffiliatesPage() {
       pendingCommission: orders.filter(o => o.status === 'pending').reduce((s, o) => s + o.commission, 0),
     }));
     result.sort((a, b) => b.totalCommission - a.totalCommission);
-    setGrouped(result);
+    return result;
+  };
+
+  const [grouped, setGrouped] = useState<GroupedAffiliate[]>(() => computeGrouped());
+  const [expanded, setExpanded] = useState<string | null>(null);
+
+  const refreshData = () => {
+    setGrouped(computeGrouped());
   };
 
   const handleMarkPaid = (recordId: string) => {
     markPaid(recordId);
-    forceRender(n => n + 1);
     refreshData();
   };
 

@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { products, WEIGHTS, GRINDS, type Product } from '@/data/products';
+import { products, WEIGHTS, GRINDS } from '@/data/products';
 import { getInventory, saveInventory, freshnessLabel, formatVND } from '@/lib/admin/mockData';
 
 const TASTING_TAGS = ['Chocolate', 'Caramel', 'Nutty', 'Fruity', 'Floral', 'Earthy', 'Smoky', 'Citrus', 'Berry', 'Vanilla', 'Honey', 'Spicy'];
@@ -14,23 +14,25 @@ export default function AdminProductEdit() {
   const product = products.find(p => p.id === id);
 
   const [taste, setTaste] = useState(product?.taste ?? { body: 5, bitter: 5, sweet: 5, aroma: 5 });
-  const [prices, setPrices] = useState<Record<string, number>>({});
-  const [roastDate, setRoastDate] = useState('2026-03-20');
+  const [prices, setPrices] = useState<Record<string, number>>(() => {
+    if (!product) return {};
+    const priceMap: Record<string, number> = {};
+    product.variants.forEach(v => { priceMap[`${v.weight}-${v.grind}`] = v.price; });
+    return priceMap;
+  });
+  const [inv, setInv] = useState<ReturnType<typeof getInventory>>(() => {
+    if (typeof window === 'undefined') return [];
+    return getInventory();
+  });
+  const [roastDate, setRoastDate] = useState(() => {
+    if (typeof window === 'undefined') return '2026-03-20';
+    const loaded = getInventory();
+    const firstInv = loaded.find(i => i.productId === id);
+    return firstInv?.roastDate ?? '2026-03-20';
+  });
   const [activeTags, setActiveTags] = useState<string[]>(['Chocolate', 'Earthy']);
   const [upsell, setUpsell] = useState<string[]>(['Phin inox 8cm']);
   const [saved, setSaved] = useState(false);
-  const [inv, setInv] = useState<ReturnType<typeof getInventory>>([]);
-
-  useEffect(() => {
-    if (!product) return;
-    const priceMap: Record<string, number> = {};
-    product.variants.forEach(v => { priceMap[`${v.weight}-${v.grind}`] = v.price; });
-    setPrices(priceMap);
-    const loaded = getInventory();
-    setInv(loaded);
-    const firstInv = loaded.find(i => i.productId === id);
-    if (firstInv) setRoastDate(firstInv.roastDate);
-  }, [product, id]);
 
   if (!product) return (
     <div className="admin-empty">

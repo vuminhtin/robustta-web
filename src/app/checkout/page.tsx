@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
@@ -67,19 +67,12 @@ export default function CheckoutPage() {
   const [voucherResult, setVoucherResult] = useState<VoucherResult | null>(null);
 
   // Address book
-  const [savedAddresses, setSavedAddresses] = useState<SavedAddress[]>([]);
+  const [savedAddresses, setSavedAddresses] = useState<SavedAddress[]>(() => {
+    if (typeof window === 'undefined') return [];
+    return getSavedAddresses();
+  });
   const [showAddressBook, setShowAddressBook] = useState(false);
   const [saveThisAddress, setSaveThisAddress] = useState(false);
-
-  // Load saved addresses
-  useEffect(() => {
-    const addrs = getSavedAddresses();
-    setSavedAddresses(addrs);
-    const defaultAddr = getDefaultAddress();
-    if (defaultAddr) {
-      loadAddress(defaultAddr);
-    }
-  }, []);
 
   const loadAddress = (addr: SavedAddress) => {
     setName(addr.name);
@@ -92,14 +85,31 @@ export default function CheckoutPage() {
     setShowAddressBook(false);
   };
 
+  // Load default address on mount
+  const [defaultLoaded, setDefaultLoaded] = useState(false);
+  if (!defaultLoaded && typeof window !== 'undefined') {
+    setDefaultLoaded(true);
+    const defaultAddr = getDefaultAddress();
+    if (defaultAddr) {
+      loadAddress(defaultAddr);
+    }
+  }
+
   // Address lists
   const provincesList = useMemo(() => getProvinces(), []);
   const districtsList = useMemo(() => getDistricts(provinceCode), [provinceCode]);
   const wardsList = useMemo(() => getWards(provinceCode, districtCode), [provinceCode, districtCode]);
 
-  // Reset dependent fields
-  useEffect(() => { setDistrictCode(''); setWardCode(''); }, [provinceCode]);
-  useEffect(() => { setWardCode(''); }, [districtCode]);
+  // Province/district change handlers (used in selects below instead of useEffect)
+  const handleProvinceChange = (code: string) => {
+    setProvinceCode(code);
+    setDistrictCode('');
+    setWardCode('');
+  };
+  const handleDistrictChange = (code: string) => {
+    setDistrictCode(code);
+    setWardCode('');
+  };
 
   // Shipping fee
   const baseShippingFee = provinceCode ? getShippingFeeByProvince(provinceCode, subtotal) : 0;
@@ -398,7 +408,7 @@ export default function CheckoutPage() {
                       <div>
                         <label className="block text-sm font-semibold text-text-primary mb-1">Tỉnh/Thành phố *</label>
                         <select
-                          required value={provinceCode} onChange={e => setProvinceCode(e.target.value)}
+                          required value={provinceCode} onChange={e => handleProvinceChange(e.target.value)}
                           className="w-full border border-border rounded-lg px-3 py-3 text-sm focus:border-brand-green focus:ring-1 focus:ring-brand-green transition-colors bg-white"
                         >
                           <option value="">Chọn tỉnh/TP</option>
@@ -410,7 +420,7 @@ export default function CheckoutPage() {
                       <div>
                         <label className="block text-sm font-semibold text-text-primary mb-1">Quận/Huyện *</label>
                         <select
-                          required value={districtCode} onChange={e => setDistrictCode(e.target.value)}
+                          required value={districtCode} onChange={e => handleDistrictChange(e.target.value)}
                           disabled={!provinceCode}
                           className="w-full border border-border rounded-lg px-3 py-3 text-sm focus:border-brand-green focus:ring-1 focus:ring-brand-green transition-colors bg-white disabled:opacity-50"
                         >

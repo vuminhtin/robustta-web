@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 import { useAffiliate, type AffiliateStats } from '@/context/AffiliateContext';
@@ -13,14 +13,13 @@ function formatDate(iso: string) {
 export default function AffiliatePage() {
   const { user, isLoading } = useAuth();
   const { getStats } = useAffiliate();
-  const [stats, setStats] = useState<AffiliateStats | null>(null);
-  const [copied, setCopied] = useState(false);
-
-  useEffect(() => {
+  const stats = useMemo<AffiliateStats | null>(() => {
     if (user?.affiliateCode) {
-      setStats(getStats(user.affiliateCode));
+      return getStats(user.affiliateCode);
     }
+    return null;
   }, [user, getStats]);
+  const [copied, setCopied] = useState(false);
 
   const affiliateLink =
     typeof window !== 'undefined'

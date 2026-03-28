@@ -1,14 +1,15 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { getInventory, freshnessLabel, type MockInventory } from '@/lib/admin/mockData';
 import { products } from '@/data/products';
 
 export default function AdminProducts() {
-  const [inv, setInv] = useState<MockInventory[]>([]);
-
-  useEffect(() => { setInv(getInventory()); }, []);
+  const [inv] = useState<MockInventory[]>(() => {
+    if (typeof window === 'undefined') return [];
+    return getInventory();
+  });
 
   const stockStatus = (stock: number, threshold: number) => {
     if (stock === 0) return <span className="admin-badge admin-badge-red">Hết hàng</span>;

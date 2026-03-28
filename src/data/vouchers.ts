@@ -61,7 +61,8 @@ export interface VoucherResult {
   voucher?: Voucher;
 }
 
-export function validateVoucher(code: string, subtotal: number, shippingFee: number): VoucherResult {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function validateVoucher(code: string, subtotal: number, _shippingFee?: number): VoucherResult {
   const voucher = vouchers.find(v => v.code.toUpperCase() === code.toUpperCase());
 
   if (!voucher) {

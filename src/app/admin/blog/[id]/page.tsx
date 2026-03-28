@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { getBlogPostBySlug, blogPosts } from '@/data/blog';
+import { blogPosts } from '@/data/blog';
 
 const CATEGORIES = [
   { id: 'knowledge', label: 'Kiến thức cà phê' },
