@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState, type ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 
 /**
  * ⚙️ CẦN CẤU HÌNH — Tài khoản / Đăng nhập
@@ -74,28 +74,9 @@ interface StoredUser extends User {
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(() => {
-    if (typeof window === 'undefined') return null;
-    try {
-      const stored = localStorage.getItem(USER_STORAGE_KEY);
-      return stored ? JSON.parse(stored) as User : null;
-    } catch {
-      return null;
-    }
-  });
-  const [orders, setOrders] = useState<Order[]>(() => {
-    if (typeof window === 'undefined') return [];
-    try {
-      const stored = localStorage.getItem(USER_STORAGE_KEY);
-      if (!stored) return [];
-      const parsed = JSON.parse(stored) as User;
-      const all = JSON.parse(localStorage.getItem(ORDERS_STORAGE_KEY) || '[]') as Order[];
-      return all.filter(o => o.userId === parsed.id);
-    } catch {
-      return [];
-    }
-  });
-  const [isLoading] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const loadOrders = (userId: string) => {
     try {
@@ -105,6 +86,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setOrders([]);
     }
   };
+
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem(USER_STORAGE_KEY);
+      if (stored) {
+        const parsed = JSON.parse(stored) as User;
+        setUser(parsed); // eslint-disable-line react-hooks/set-state-in-effect
+        loadOrders(parsed.id);
+      }
+    } catch { /* skip */ }
+    setIsLoading(false);  
+  }, []);
 
   const login = async (email: string, password: string): Promise<boolean> => {
     try {

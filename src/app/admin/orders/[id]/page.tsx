@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { getOrders, updateOrderStatus, formatVND, type MockOrder } from '@/lib/admin/mockData';
 
@@ -14,21 +14,19 @@ const PAYMENT_LABEL: Record<string, string> = { vietqr: 'VietQR / Chuyển kho�
 export default function AdminOrderDetail() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
-  const [order, setOrder] = useState<MockOrder | null>(() => {
-    if (typeof window === 'undefined') return null;
-    return getOrders().find(o => o.id === id) ?? null;
-  });
-  const [newStatus, setNewStatus] = useState<MockOrder['status']>(() => {
-    if (typeof window === 'undefined') return 'pending';
-    const o = getOrders().find(o => o.id === id);
-    return o?.status ?? 'pending';
-  });
-  const [trackingCode, setTrackingCode] = useState(() => {
-    if (typeof window === 'undefined') return '';
-    const o = getOrders().find(o => o.id === id);
-    return o?.trackingCode ?? '';
-  });
+  const [order, setOrder] = useState<MockOrder | null>(null);
+  const [newStatus, setNewStatus] = useState<MockOrder['status']>('pending');
+  const [trackingCode, setTrackingCode] = useState('');
   const [saved, setSaved] = useState(false);
+
+  useEffect(() => {
+    const o = getOrders().find(o => o.id === id) ?? null;
+    setOrder(o); // eslint-disable-line react-hooks/set-state-in-effect
+    if (o) {
+      setNewStatus(o.status);  
+      setTrackingCode(o.trackingCode);  
+    }
+  }, [id]);
 
   if (!order) return <div className="admin-empty">Không tìm thấy đơn hàng này.</div>;
 
