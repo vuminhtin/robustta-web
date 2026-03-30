@@ -19,7 +19,7 @@ export const giftSets: GiftSet[] = [
     name: 'Set Quà — Lễ',
     tagline: 'Trang trọng & Ý nghĩa',
     description: 'Bộ quà tặng dành cho dịp lễ tết, tân gia, hay cảm ơn đối tác. Hộp quà sang trọng gồm đủ 3 dòng cà phê R, B, T — gửi gắm trọn vẹn câu chuyện RobustTA.',
-    image: '/images/IMG_8569.jpg',
+    image: '/images/RobustTA-R.jpg',
     price: 890000,
     items: [
       'R — Rich (200g)',
@@ -37,7 +37,7 @@ export const giftSets: GiftSet[] = [
     name: 'Set Quà — Bình An',
     tagline: 'Tối giản & Tinh tế',
     description: 'Bộ quà đơn giản nhưng tinh tế — dành tặng bạn bè, đồng nghiệp, hay tự thưởng cho chính mình. Hạt rang mộc kèm phin, sẵn sàng thưởng thức.',
-    image: '/images/IMG_9020.jpg',
+    image: '/images/RobustTA-B.jpg',
     price: 520000,
     items: [
       'B — Balanced (500g)',
@@ -52,7 +52,7 @@ export const giftSets: GiftSet[] = [
     name: 'Set Quà — Tri Ân',
     tagline: 'Sang trọng & Đẳng cấp',
     description: 'Bộ quà cao cấp nhất cho đối tác, khách hàng VIP, hoặc người thân đặc biệt. Đóng gói riêng, có thể in logo doanh nghiệp theo yêu cầu.',
-    image: '/images/IMG_8563.jpg',
+    image: '/images/RobustTA-T.jpg',
     price: 1680000,
     items: [
       'R — Rich (500g)',

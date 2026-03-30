@@ -15,7 +15,7 @@ export default function GiftSetsPage() {
       <section className="relative py-20 bg-brand-brown-deep overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="/images/IMG_8563.jpg"
+            src="/images/RobustTA-T.jpg"
             alt="Set quà"
             fill
             className="object-cover opacity-25"

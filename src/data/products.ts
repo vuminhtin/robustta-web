@@ -43,8 +43,8 @@ export const products: Product[] = [
     taglineEn: 'Rich — Medium Dark Roast',
     roastLevel: 'Medium Dark Roast',
     description: 'Dòng cà phê đậm đà, mạnh mẽ cho những ai yêu vị cà phê thuần túy. Rang medium-dark giữ trọn hương thơm đất đỏ bazan Lâm Đồng, hậu vị sô-cô-la đắng quyện cùng gỗ ấm. Thích hợp pha phin truyền thống hoặc espresso đậm vị.',
-    image: '/images/IMG_8569.jpg',
-    images: ['/images/IMG_8569.jpg', '/images/IMG_9020.jpg', '/images/IMG_8563.jpg'],
+    image: '/images/RobustTA-R.jpg',
+    images: ['/images/RobustTA-R.jpg', '/images/RobustTA-B.jpg', '/images/RobustTA-T.jpg'],
     color: '#E8834A',
     taste: { body: 9, bitter: 8, sweet: 4, aroma: 7 },
     variants: [
@@ -80,8 +80,8 @@ export const products: Product[] = [
     taglineEn: 'Balanced — Medium Roast',
     roastLevel: 'Medium Roast',
     description: 'Dòng cà phê cân bằng hoàn hảo giữa đắng – chua – ngọt. Rang medium giữ lại vị chua nhẹ tự nhiên của Robusta cao nguyên, hậu vị mật ong và hạt dẻ. Lý tưởng cho pour-over hoặc cold brew.',
-    image: '/images/IMG_9020.jpg',
-    images: ['/images/IMG_9020.jpg', '/images/IMG_8569.jpg', '/images/IMG_8563.jpg'],
+    image: '/images/RobustTA-B.jpg',
+    images: ['/images/RobustTA-B.jpg', '/images/RobustTA-R.jpg', '/images/RobustTA-T.jpg'],
     color: '#2B4D40',
     taste: { body: 6, bitter: 5, sweet: 7, aroma: 8 },
     variants: [
@@ -113,8 +113,8 @@ export const products: Product[] = [
     taglineEn: 'Trust — Medium Roast',
     roastLevel: 'Medium Roast',
     description: 'Dòng cà phê nguyên bản nhất — được chọn lọc từ những vườn cà phê gia đình tại Lâm Đồng. Medium roast giữ trọn hương trái cây chín, vị caramel nhẹ nhàng và hậu vị kéo dài. Dành cho người sành cà phê, muốn trải nghiệm Robusta đúng nghĩa.',
-    image: '/images/IMG_8563.jpg',
-    images: ['/images/IMG_8563.jpg', '/images/IMG_9020.jpg', '/images/IMG_8569.jpg'],
+    image: '/images/RobustTA-T.jpg',
+    images: ['/images/RobustTA-T.jpg', '/images/RobustTA-B.jpg', '/images/RobustTA-R.jpg'],
     color: '#58413A',
     taste: { body: 7, bitter: 6, sweet: 8, aroma: 9 },
     variants: [

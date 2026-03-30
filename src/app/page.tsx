@@ -11,7 +11,7 @@ export default function HomePage() {
         {/* Background Image */}
         <div className="absolute inset-0">
           <Image
-            src="/images/IMG_9020.jpg"
+            src="/images/Banner.jpg"
             alt="RobustTA Coffee"
             fill
             className="object-cover opacity-40"
@@ -110,10 +110,10 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="text-center md:text-left">
             <span className="text-brand-teal-light text-sm font-bold uppercase tracking-widest">Khuyến mãi đặc biệt</span>
-            <h3 className="text-2xl sm:text-3xl font-extrabold text-white mt-2">
+            <h3 className="text-2xl sm:text-3xl font-extrabold !text-brand-yellow-cream mt-2">
               MUA 500G — <span className="text-brand-orange">TẶNG 200G</span>
             </h3>
-            <p className="text-white/70 mt-2 text-sm">Áp dụng cho tất cả sản phẩm. Số lượng có hạn!</p>
+            <p className="!text-white/80 mt-2 text-sm">Áp dụng cho tất cả sản phẩm. Số lượng có hạn!</p>
           </div>
           <Link
             href="/products"
@@ -151,7 +151,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-lg">
               <Image
-                src="/images/IMG_8569.jpg"
+                src="/images/RobustTA-R.jpg"
                 alt="Vườn cà phê RobustTA"
                 fill
                 className="object-cover"
