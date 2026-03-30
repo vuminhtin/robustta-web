@@ -16,6 +16,7 @@ export default function HomePage() {
             fill
             className="object-cover opacity-40"
             priority
+            sizes="100vw"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-brand-brown-deep/90 via-brand-brown-deep/70 to-transparent" />
         </div>
@@ -154,6 +155,7 @@ export default function HomePage() {
                 alt="Vườn cà phê RobustTA"
                 fill
                 className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
             </div>
             <div>

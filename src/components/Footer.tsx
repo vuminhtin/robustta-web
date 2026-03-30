@@ -102,7 +102,7 @@ export default function Footer() {
                   rel="noreferrer"
                   className="block hover:opacity-80 transition-opacity"
                 >
-                  <img 
+                  <Image 
                     src="/images/bct-official.png" 
                     alt="Đã thông báo Bộ Công Thương"
                     width={130}
