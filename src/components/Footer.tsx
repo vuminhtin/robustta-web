@@ -31,7 +31,7 @@ export default function Footer() {
       <div className="absolute inset-0 bg-linear-to-b from-black/20 to-transparent pointer-events-none" />
       
       {/* Main Footer Content */}
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-16">
           
           {/* Brand Identity */}
@@ -165,17 +165,10 @@ export default function Footer() {
 
       {/* Bottom Bar */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div className="flex flex-col sm:flex-row items-center justify-center text-center">
           <p className="text-[10px] uppercase font-bold tracking-[0.3em] text-white/40">
             © 2025 RobustTA. Crafted for Coffee Lovers.
           </p>
-          <div className="flex items-center gap-8 text-[10px] tracking-[0.2em] text-brand-orange/60 font-black">
-            <span>RICH</span>
-            <span className="w-1.5 h-1.5 rounded-full bg-white/10" />
-            <span>BALANCED</span>
-            <span className="w-1.5 h-1.5 rounded-full bg-white/10" />
-            <span>TRUST</span>
-          </div>
         </div>
       </div>
     </footer>
