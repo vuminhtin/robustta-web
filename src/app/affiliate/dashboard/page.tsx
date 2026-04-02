@@ -130,7 +130,7 @@ export default function AffiliateDashboard() {
             ))}
             {data.recentCommissions.length === 0 && (
               <tr>
-                <td colSpan={6} style={{ textAlign: 'center', py: 40, color: '#9ca3af' }}>
+                <td colSpan={6} style={{ textAlign: 'center', paddingTop: 40, paddingBottom: 40, color: '#9ca3af' }}>
                   Bạn chưa có lượt referral nào thành công
                 </td>
               </tr>

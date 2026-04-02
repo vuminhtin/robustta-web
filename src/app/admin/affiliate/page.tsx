@@ -137,7 +137,7 @@ export default function AdminAffiliatePage() {
             ))}
             {affiliates.length === 0 && (
               <tr>
-                <td colSpan={8} style={{ textAlign: 'center', py: 40, color: '#9ca3af' }}>
+                <td colSpan={8} style={{ textAlign: 'center', paddingTop: 40, paddingBottom: 40, color: '#9ca3af' }}>
                   Chưa có đối tác affiliate nào
                 </td>
               </tr>

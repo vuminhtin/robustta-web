@@ -34,12 +34,8 @@ export async function getMenuItems(location: 'header' | 'footer', includeInactiv
     if (!items || items.length === 0) {
       return INITIAL_MENUS.filter(m => m.location === location);
     }
-    
-    // Sanitize Prisma dates
-    return items.map(item => ({
-      ...item,
-      createdAt: item.createdAt?.toISOString(),
-    }));
+    // Return Prisma items directly (schema lacks createdAt field)
+    return items;
   } catch (error) {
     // Explicitly handle ECONNREFUSED/KnownRequestError
     console.warn('DB Connection Refused - Using Menu Fallbacks:', (error as any).code || 'UNKNOWN');
