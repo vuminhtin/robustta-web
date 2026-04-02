@@ -13,7 +13,7 @@ export default function AboutPage() {
       <section className="relative py-24 bg-brand-brown-deep overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="/images/Banner.jpg"
+            src="/images/Banner 2.jpg"
             alt="RobustTA"
             fill
             className="object-cover opacity-30"

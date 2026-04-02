@@ -3,20 +3,40 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
+import { getMenuItems } from '@/app/actions/menuActions';
+
+interface FooterLink {
+  id: string;
+  label: string;
+  url: string;
+}
 
 export default function Footer() {
+  const [policyLinks, setPolicyLinks] = useState<FooterLink[]>([]);
+  const [supportLinks, setSupportLinks] = useState<FooterLink[]>([]);
+
+  useEffect(() => {
+    getMenuItems('footer').then((items: any[]) => {
+      // Split items by some logic or just use them
+      // For now, let's assume all footer items are gathered
+      setPolicyLinks(items.slice(0, 4).map((i: any) => ({ id: i.id, label: i.label, url: i.url })));
+      setSupportLinks(items.slice(4).map((i: any) => ({ id: i.id, label: i.label, url: i.url })));
+    });
+  }, []);
+
   return (
     <footer className="relative bg-brand-brown-footer text-brand-foamy-cream overflow-hidden border-t border-white/5">
       {/* Subtle Grainy Texture / Gradient Overlay */}
       <div className="absolute inset-0 bg-linear-to-b from-black/20 to-transparent pointer-events-none" />
       
       {/* Main Footer Content */}
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-16">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-16">
           
           {/* Brand Identity */}
-          <div className="md:col-span-1 space-y-6">
-            <Link href="/" className="inline-block transition-transform hover:scale-105 active:scale-95">
+          <div className="md:col-span-1 flex flex-col">
+            <Link href="/" className="inline-block mb-6 transition-transform hover:scale-105 active:scale-95">
               <Image
                 src="/images/logo-white.png"
                 alt="RobustTA Logo"
@@ -25,23 +45,35 @@ export default function Footer() {
                 className="h-11 w-auto"
               />
             </Link>
-            <div className="max-w-fit">
-              <p className="text-brand-orange text-xs font-bold uppercase tracking-[0.3em] mb-4 whitespace-nowrap">
-                Đậm Đà · Cân Bằng · Tin Cậy
+            
+            {/* Identity Info */}
+            <div className="space-y-2 mb-6">
+              <p className="text-sm font-bold text-white uppercase tracking-wider leading-relaxed">
+                CÔNG TY TNHH RBT GROUP
               </p>
-              <p className="text-sm leading-relaxed opacity-95 max-w-xs text-justify">
-                Hành trình tìm kiếm hương vị cà phê nguyên bản từ cao nguyên Lâm Đồng, mang tâm hồn Việt vào từng tách chiết xuất.
+              <p className="text-[13px] leading-relaxed opacity-90 max-w-xs">
+                Địa chỉ: Căn Biệt Thự A17 Đường Lê Văn Khương, Tổ 6, Khu phố 7, Phường Tân Thới Hiệp, TPHCM
+              </p>
+              <p className="text-[13px] opacity-90 font-medium">
+                MST: 0319300960
               </p>
             </div>
-            
-            {/* Social Icons - Premium Style */}
-            <div className="flex gap-4 pt-2">
-              <a href="#" className="w-9 h-9 flex items-center justify-center rounded-full border border-white/10 hover:border-brand-orange hover:bg-brand-orange hover:text-white transition-all duration-300 group text-brand-orange">
-                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>
-              </a>
-              <a href="#" className="w-9 h-9 flex items-center justify-center rounded-full border border-white/10 hover:border-brand-orange hover:bg-brand-orange hover:text-white transition-all duration-300 group text-brand-orange">
-                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-              </a>
+
+            {/* Divider & Tagline */}
+            <div className="pt-4 border-t border-white/10 max-w-[280px]">
+              <p className="text-brand-orange text-[10px] font-black uppercase tracking-[0.2em] mb-6 whitespace-nowrap">
+                ĐẬM ĐÀ · CÂN BẰNG · TIN CẬY
+              </p>
+              
+              {/* Social Icons - Moved to bottom of Identity Col */}
+              <div className="flex gap-4">
+                <a href="https://www.facebook.com/61583756883189/" target="_blank" rel="noreferrer" className="w-9 h-9 flex items-center justify-center rounded-full border border-white/10 hover:border-brand-orange hover:bg-brand-orange hover:text-white transition-all duration-300 group text-brand-orange">
+                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>
+                </a>
+                <a href="#" className="w-9 h-9 flex items-center justify-center rounded-full border border-white/10 hover:border-brand-orange hover:bg-brand-orange hover:text-white transition-all duration-300 group text-brand-orange">
+                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                </a>
+              </div>
             </div>
           </div>
 
@@ -49,10 +81,15 @@ export default function Footer() {
           <div>
             <h4 className="!text-brand-yellow-cream text-xs font-bold uppercase tracking-[0.2em] mb-7">Chính sách</h4>
             <ul className="space-y-4">
-              {['Chính sách đổi trả', 'Chính sách khuyến mãi', 'Chính sách bảo mật', 'Chính sách giao hàng'].map((label, idx) => (
+              {(policyLinks.length > 0 ? policyLinks : [
+                { label: 'Chính sách đổi trả', url: '/policy/refund-returns' },
+                { label: 'Chính sách khuyến mãi', url: '/policy/promotions' },
+                { label: 'Chính sách bảo mật', url: '/policy/privacy' },
+                { label: 'Chính sách giao hàng', url: '/policy/shipping' },
+              ]).map((link: any, idx) => (
                 <li key={idx}>
-                  <Link href={`/policy/${['refund-returns', 'promotions', 'privacy', 'shipping'][idx]}`} className="text-sm border-b border-transparent hover:border-brand-foamy-cream hover:text-white transition-all duration-300">
-                    {label}
+                  <Link href={link.url} className="text-sm border-b border-transparent hover:border-brand-foamy-cream hover:text-white transition-all duration-300">
+                    {link.label}
                   </Link>
                 </li>
               ))}
@@ -63,10 +100,15 @@ export default function Footer() {
           <div>
             <h4 className="!text-brand-yellow-cream text-xs font-bold uppercase tracking-[0.2em] mb-7">Hỗ trợ</h4>
             <ul className="space-y-4">
-              {['Chính sách khiếu nại', 'Điều khoản & Điều kiện', 'Chính sách đồng kiểm', 'Hình thức thanh toán'].map((label, idx) => (
+              {(supportLinks.length > 0 ? supportLinks : [
+                { label: 'Chính sách khiếu nại', url: '/policy/complaints' },
+                { label: 'Điều khoản & Điều kiện', url: '/policy/terms' },
+                { label: 'Chính sách đồng kiểm', url: '/policy/inspection' },
+                { label: 'Hình thức thanh toán', url: '/policy/payment' },
+              ]).map((link: any, idx) => (
                 <li key={idx}>
-                  <Link href={`/policy/${['complaints', 'terms', 'inspection', 'payment'][idx]}`} className="text-sm border-b border-transparent hover:border-brand-foamy-cream hover:text-white transition-all duration-300">
-                    {label}
+                  <Link href={link.url} className="text-sm border-b border-transparent hover:border-brand-foamy-cream hover:text-white transition-all duration-300">
+                    {link.label}
                   </Link>
                 </li>
               ))}
@@ -87,7 +129,7 @@ export default function Footer() {
                 <span className="shrink-0 text-brand-orange group-hover:scale-110 transition-transform">
                   <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M0 3v18h24v-18h-24zm21.518 2l-9.518 7.713-9.518-7.713h19.036zm-19.518 14v-11.817l10 8.104 10-8.104v11.817h-20z"/></svg>
                 </span>
-                <a href="mailto:info@robustta.com" className="hover:text-white transition-colors text-[11px] tracking-wide font-medium">info@robustta.com</a>
+                <a href="mailto:info@robustta.com" className="hover:text-white transition-colors text-sm tracking-wide font-medium">info@robustta.com</a>
               </li>
               <li className="flex items-center gap-3 group">
                 <span className="shrink-0 text-brand-orange group-hover:scale-110 transition-transform">
@@ -105,9 +147,9 @@ export default function Footer() {
                   <Image 
                     src="/images/bct-official.png" 
                     alt="Đã thông báo Bộ Công Thương"
-                    width={130}
-                    height={50}
-                    className="h-[50px] w-auto transition-all duration-300"
+                    width={156}
+                    height={60}
+                    className="h-[60px] w-auto transition-all duration-300"
                   />
                 </a>
               </li>

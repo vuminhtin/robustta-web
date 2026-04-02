@@ -8,10 +8,11 @@ import Footer from "@/components/Footer";
 import FloatingContact from "@/components/FloatingContact";
 import { Suspense } from "react";
 import RefCapture from "@/components/RefCapture";
+import ContentProtection from "@/components/ContentProtection";
 
 export const metadata: Metadata = {
   title: "RobustTA — Cà Phê Hạt Rang Nguyên Chất | Đậm Đà · Cân Bằng · Tin Cậy",
-  description: "RobustTA — 100% cà phê hạt rang mộc nguyên chất từ vùng trồng gia đình tại Lâm Đồng. Không tẩm ướp, không pha trộn. Đánh thức bản lĩnh Việt, nâng tầm vị thế Robusta Việt Nam.",
+  description: "RobustTA — 100% cà phê hạt rang mộc nguyên chất từ vườn trồng gia đình tại Lâm Đồng. Không tẩm ướp, không pha trộn. Đánh thức bản lĩnh Việt, nâng tầm vị thế Robusta Việt Nam.",
   keywords: ["cà phê", "robusta", "hạt rang", "nguyên chất", "lâm đồng", "robustta", "cà phê sạch"],
   openGraph: {
     title: "RobustTA — Cà Phê Hạt Rang Nguyên Chất",
@@ -28,10 +29,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="vi" className="h-full antialiased">
-      <body className="min-h-full flex flex-col font-body text-text-primary bg-bg-light" suppressHydrationWarning>
+      <body className="min-h-full flex flex-col font-body text-text-primary bg-bg-light body-protected" suppressHydrationWarning>
         <AuthProvider>
         <AffiliateProvider>
         <CartProvider>
+          <ContentProtection />
           {/* Capture ?ref= param on every page load */}
           <Suspense fallback={null}>
             <RefCapture />

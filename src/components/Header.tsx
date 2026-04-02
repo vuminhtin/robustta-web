@@ -6,8 +6,14 @@ import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
 import SearchModal from '@/components/SearchModal';
+import { getMenuItems } from '@/app/actions/menuActions';
 
-const navLinks = [
+interface NavLink {
+  href: string;
+  label: string;
+}
+
+const FALLBACK_NAV: NavLink[] = [
   { href: '/', label: 'Trang chủ' },
   { href: '/products', label: 'Sản phẩm' },
   { href: '/gift-sets', label: 'Set quà' },
@@ -22,10 +28,19 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [navLinks, setNavLinks] = useState<NavLink[]>(FALLBACK_NAV);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
+    
+    // Fetch dynamic menu
+    getMenuItems('header').then((items: any[]) => {
+      if (items && items.length > 0) {
+        setNavLinks(items.map((i: any) => ({ href: i.url, label: i.label })));
+      }
+    });
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 

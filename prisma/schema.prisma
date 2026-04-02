@@ -2,13 +2,12 @@
 // Supabase PostgreSQL via Prisma ORM
 
 generator client {
-  provider = "prisma-client-js"
+  provider   = "prisma-client-js"
+  engineType = "library"
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider = "postgresql"
 }
 
 // ========== AUTH & USERS ==========
@@ -17,6 +16,7 @@ enum UserRole {
   ADMIN
   EDITOR
   SALES
+  AFFILIATE
 }
 
 model User {
@@ -31,6 +31,7 @@ model User {
 
   orders       Order[]
   activityLogs ActivityLog[]
+  affiliate    Affiliate?
 }
 
 // ========== PRODUCTS ==========
@@ -128,6 +129,11 @@ model Order {
   userId        String?
   user          User?         @relation(fields: [userId], references: [id])
   items         OrderItem[]
+  
+  // Affiliate
+  referrerId    String?
+  referrer      Affiliate?    @relation("Referrer", fields: [referrerId], references: [id])
+  affiliateCommission AffiliateCommission?
 
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
@@ -151,6 +157,39 @@ model OrderItem {
   variant ProductVariant @relation(fields: [variantId], references: [id])
 
   @@index([orderId])
+}
+
+model Affiliate {
+  id              String   @id @default(uuid())
+  userId          String   @unique
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  refCode         String   @unique
+  commissionRate  Float    @default(5.0) // Percentage per affiliate
+  status          String   @default("ACTIVE") // ACTIVE, SUSPENDED
+  totalSales      Int      @default(0) // Lifetime Referral Sales count
+  totalCommission Int      @default(0) // Total earned in VND
+  balance         Int      @default(0) // Current unpaid balance in VND
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  commissions AffiliateCommission[]
+  orders      Order[] @relation("Referrer")
+
+  @@index([refCode])
+}
+
+model AffiliateCommission {
+  id          String   @id @default(uuid())
+  affiliateId String
+  orderId     String   @unique
+  amount      Int      // VND amount earned
+  status      String   @default("PENDING") // PENDING, PAID
+  createdAt   DateTime @default(now())
+
+  affiliate Affiliate @relation(fields: [affiliateId], references: [id], onDelete: Cascade)
+  order     Order     @relation(fields: [orderId], references: [id])
+
+  @@index([affiliateId])
 }
 
 // ========== CMS ==========
@@ -213,4 +252,17 @@ model ActivityLog {
 
   @@index([userId])
   @@index([createdAt])
+}
+
+model PageSection {
+  id        String   @id @default(uuid())
+  name      String   @unique // "hero", "products", "brewing", etc.
+  label     String
+  isActive  Boolean  @default(true)
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([name])
+  @@index([isActive, sortOrder])
 }

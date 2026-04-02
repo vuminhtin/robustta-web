@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { products } from '@/data/products';
+import SEOEvaluator from '@/components/admin/SEOEvaluator';
 
 const CATEGORIES = [
   { id: 'knowledge', label: 'Kiến thức cà phê' },
@@ -133,25 +134,40 @@ export default function AdminBlogEditor() {
         {/* SEO Sidebar */}
         <div>
           <div className="admin-card">
+            <SEOEvaluator
+              title={title}
+              metaDescription={excerpt}
+              content={content}
+              focusKeyword={SEO_KEYWORDS[0]}
+            />
+          </div>
+
+          <div className="admin-card">
             <p className="admin-card-title">
               🔍 SEO Checklist
               <span style={{
                 marginLeft: 'auto', fontSize: 13, padding: '2px 10px', borderRadius: 99,
-                background: seoScore >= 4 ? 'rgba(43,77,64,0.3)' : 'rgba(232,131,74,0.15)',
-                color: seoScore >= 4 ? '#7fcf9f' : '#E8834A'
+                background: seoScore >= 4 ? 'rgba(16,185,129,0.2)' : seoScore >= 2 ? 'rgba(245,158,11,0.2)' : 'rgba(239,68,68,0.2)',
+                color: seoScore >= 4 ? '#10b981' : seoScore >= 2 ? '#f59e0b' : '#ef4444'
               }}>
                 {seoScore}/{seoChecks.length}
               </span>
             </p>
             <div className="admin-seo-list">
-              {seoChecks.map((check, i) => (
-                <div key={i} className="admin-seo-item">
-                  <span className={check.pass ? 'admin-seo-pass' : check.warn ? 'admin-seo-warn' : 'admin-seo-fail'}>
-                    {check.pass ? '✅' : check.warn ? '⚠️' : '❌'}
-                  </span>
-                  <span style={{ color: check.pass ? '#9ca3af' : '#e8e8e6' }}>{check.label}</span>
-                </div>
-              ))}
+              {seoChecks.map((check, i) => {
+                const color = check.pass ? '#10b981' : check.warn ? '#f59e0b' : '#ef4444';
+                return (
+                  <div key={i} className="admin-seo-item">
+                    <span 
+                      style={{ 
+                        display: 'inline-block', width: 10, height: 10, borderRadius: '50%', background: color,
+                        boxShadow: `0 0 5px ${color}`
+                      }} 
+                    />
+                    <span style={{ color: check.pass ? '#9ca3af' : '#e8e8e6' }}>{check.label}</span>
+                  </div>
+                );
+              })}
             </div>
           </div>
 

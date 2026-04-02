@@ -52,23 +52,23 @@ Việt Nam là nước sản xuất Robusta lớn nhất thế giới, nhưng ph
     title: 'Hướng dẫn pha phin chuẩn vị — Từ A đến Z',
     excerpt: 'Pha phin nghe đơn giản, nhưng để có tách cà phê phin "chuẩn" cần hiểu đúng tỷ lệ, nhiệt độ nước, và thời gian. Dưới đây là bí quyết pha phin hoàn hảo.',
     content: `**Dụng cụ cần có:**
-- Phin inox (loại 7-8cm)
-- Cà phê xay phin (trung bình–thô)
-- Ấm nước 90-95°C
+- Phin inox RobustTA (loại 7-8cm)
+- 20g - 25g cà phê RobustTA (Mộc)
+- Ấm nước 92-95°C
 - Ly/cốc
 
-**Bước 1: Chuẩn bị**
-Cho 25g cà phê vào phin. Lắc nhẹ để cà phê phẳng đều.
+**Bước 1: Chuẩn bị & Tráng**
+Tráng phin và ly bằng nước sôi để ổn định nhiệt độ. Cho 20g-25g cà phê vào phin, lắc nhẹ để phẳng mặt.
 
-**Bước 2: Bloom (Nở)**
-Rót 30ml nước nóng, chờ 30 giây. Đây là lúc cà phê "thở" và giải phóng CO2.
+**Bước 2: Bloom (Ủ cà phê)**
+Rót 30ml nước nóng (92-95°C) vào phin. Chờ 30-45 giây. Đây là bước quan trọng nhất để cà phê "thở" và giải phóng CO2, giúp hương vị đậm đà hơn.
 
 **Bước 3: Chiết xuất**
-Rót thêm 120-150ml nước nóng. Đặt nắp phin. Chờ 4-5 phút để cà phê nhỏ giọt hoàn toàn.
+Rót thêm 50ml-60ml nước nóng. Đậy nắp phin. Tốc độ nhỏ giọt lý tưởng là khoảng 1 giọt/giây.
 
 **Bí quyết:**
-- Nước quá nóng (100°C) sẽ làm cà phê đắng khét
-- Xay quá mịn sẽ tắc phin, quá thô sẽ nhạt`,
+- Sử dụng RobustTA R (Rich) để có hậu vị sô-cô-la đắng đậm.
+- Nước pha nên là nước lọc tinh khiết để không làm biến đổi vị cà phê.`,
     image: '/images/IMG_8569.jpg',
     category: 'brewing',
     categoryLabel: 'Hướng dẫn pha chế',
@@ -108,18 +108,17 @@ Cà phê được trồng không sử dụng thuốc trừ sâu, phân bón hóa
     slug: 'cold-brew-tai-nha-don-gian',
     title: 'Cold Brew tại nhà — Đơn giản hơn bạn nghĩ',
     excerpt: 'Cold brew không cần thiết bị đắt tiền. Chỉ cần một bình thủy tinh, cà phê xay thô, và 12 tiếng kiên nhẫn.',
-    content: `**Tỷ lệ vàng:** 1:10 (70g cà phê : 700ml nước lạnh)
+    content: `**Tỷ lệ vàng:** 1:10 (100g cà phê : 1000ml nước lạnh)
 
 **Các bước:**
-1. Cho cà phê xay thô vào bình
-2. Đổ nước lạnh/nước nguội
-3. Khuấy nhẹ, đậy nắp
-4. Cho vào tủ lạnh 12-18 tiếng
-5. Lọc qua giấy lọc hoặc vải lọc
-6. Thưởng thức với đá, sữa tươi, hoặc sirô đơn giản
+1. **Xay thô:** Sử dụng cà phê xay thô (như hạt muối biển) để tránh bị đắng gắt.
+2. **Ngâm:** Cho cà phê vào túi lọc hoặc bình. Đổ nước lạnh vào và khuấy nhẹ.
+3. **Kiên nhẫn:** Đậy kín và bảo quản trong ngăn mát tủ lạnh từ 12-24 tiếng.
+4. **Lọc:** Loại bỏ bã cà phê. Tuyệt đối không vắt túi lọc để giữ nước cốt trong trẻo.
+5. **Thưởng thức:** Có thể dùng trực tiếp với đá hoặc pha thêm cam sả, sữa tươi.
 
 **Tại sao Cold Brew ngon?**
-Vì được chiết xuất ở nhiệt độ thấp, cold brew ít đắng hơn, vị ngọt tự nhiên hơn, và có hương thơm đặc biệt mà cà phê nóng không có được.`,
+Vì được chiết xuất chậm ở nhiệt độ thấp, Cold Brew giảm thiểu 60% độ chua và đắng, mang lại vị ngọt tự nhiên, thanh mượt và cực kỳ sảng khoái.`,
     image: '/images/IMG_9020.jpg',
     category: 'brewing',
     categoryLabel: 'Hướng dẫn pha chế',
@@ -154,6 +153,56 @@ Vì được chiết xuất ở nhiệt độ thấp, cold brew ít đắng hơn
     author: 'RobustTA',
     date: '2025-08-22',
     readTime: '4 phút',
+  },
+  {
+    id: 'pha-may-espresso',
+    slug: 'huong-dan-pha-may-espresso-barista',
+    title: 'Pha máy (Espresso) — Chuẩn Barista tại gia',
+    excerpt: 'Làm thế nào để chiết xuất một shot Espresso hoàn hảo với lớp crema dày mượt? Dưới đây là các thông số kỹ thuật từ chuyên gia RobustTA.',
+    content: `**Thông số kỹ thuật:**
+- **Lượng bột:** 18g (Dose)
+- **Lượng chiết xuất:** 36g - 40g (Yield)
+- **Thời gian:** 25 - 30 giây
+- **Áp suất:** 9 bar
+- **Nhiệt độ:** 90 - 93°C
+
+**Các bước thực hiện:**
+1. **Chuẩn bị:** Xả nước grouphead và lau khô tay pha (portafilter).
+2. **Nén (Tamping):** Cho 18g cà phê xay mịn vào, dùng tamper nén một lực đều tay khoảng 15-20kg để bề mặt cà phê phẳng tuyệt đối.
+3. **Chiết xuất:** Lắp tay pha và bắt đầu chiết xuất ngay.
+4. **Quan sát:** Dòng chảy ban đầu có màu sẫm (Pre-infusion), sau đó chuyển dần sang màu vàng mật ong (Tiger striping).
+
+**Lưu ý:** Nếu chảy quá nhanh (>40g trong <20s), hãy xay cà phê mịn hơn. Nếu chảy quá chậm, hãy xay thô hơn.`,
+    image: '/images/RobustTA-R.jpg',
+    category: 'brewing',
+    categoryLabel: 'Hướng dẫn pha chế',
+    author: 'RobustTA',
+    date: '2026-03-30',
+    readTime: '5 phút',
+  },
+  {
+    id: 'pha-pour-over',
+    slug: 'nghe-thuat-pha-pour-over-v60',
+    title: 'Nghệ thuật Pour-over (V60) — Đánh thức hương vị trái cây',
+    excerpt: 'Pour-over là cách tốt nhất để cảm nhận trọn vẹn sự thanh khiết và các nốt hương phức hợp của cà phê. Hãy cùng khám phá kỹ thuật rót nước đỉnh cao.',
+    content: `**Công thức chuẩn:**
+- **Tỷ lệ:** 1:15 (20g cà phê : 300ml nước)
+- **Độ xay:** Vừa - Thô (Medium-Coarse)
+- **Nhiệt độ:** 92°C
+
+**Các bước thực hiện:**
+1. **Tráng giấy:** Rót nước nóng quanh phễu để khử mùi giấy và làm nóng bình chứa.
+2. **Bloom:** Rót 40ml nước, chờ 30 giây để cà phê nở đều.
+3. **Rót nước (Pouring):** Chia lượng nước còn lại thành 2-3 lần rót. Rót theo vòng tròn từ trong ra ngoài, tránh rót trực tiếp vào thành phễu.
+4. **Kết thúc:** Tổng thời gian pha nên rơi vào khoảng 2:30 - 3:00 phút.
+
+**Gợi ý:** Sử dụng dòng **RobustTA Taste (T)** để cảm nhận rõ nhất vị chua thanh và hương hoa cỏ tinh tế.`,
+    image: '/images/RobustTA-T.jpg',
+    category: 'brewing',
+    categoryLabel: 'Hướng dẫn pha chế',
+    author: 'RobustTA',
+    date: '2026-03-30',
+    readTime: '6 phút',
   },
 ];
 

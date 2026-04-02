@@ -9,6 +9,8 @@ const navItems = [
   { href: '/admin/products', label: 'Sản phẩm', icon: '☕' },
   { href: '/admin/orders', label: 'Đơn hàng', icon: '📦' },
   { href: '/admin/blog', label: 'Blog', icon: '✍️' },
+  { href: '/admin/menus', label: 'Menu', icon: '🗺️' },
+  { href: '/admin/content', label: 'Trang chủ', icon: '🏗️' },
   { href: '/admin/vouchers', label: 'Vouchers', icon: '🏷️' },
   { href: '/admin/reports', label: 'Báo cáo', icon: '📈' },
 ];
