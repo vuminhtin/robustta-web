@@ -26,12 +26,8 @@ export async function getPageSections(includeInactive = false) {
       return INITIAL_SECTIONS;
     }
 
-    return sections.filter(s => includeInactive || s.isActive)
-      .map(s => ({
-        ...s,
-        createdAt: s.createdAt?.toISOString(),
-        updatedAt: s.updatedAt?.toISOString(),
-      }));
+    // Return sections directly if available
+    return sections.filter((s: any) => includeInactive || s.isActive);
   } catch (error) {
     // Explicitly handle ECONNREFUSED/KnownRequestError to prevent Next.js Error Overlay
     console.warn('DB Connection Refused - Using App Fallbacks:', (error as any).code || 'UNKNOWN');
